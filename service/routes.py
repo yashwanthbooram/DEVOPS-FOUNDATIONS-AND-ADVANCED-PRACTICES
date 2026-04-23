@@ -17,6 +17,8 @@ def create_account():
     data = request.get_json()
     if not data or "name" not in data:
         abort(400, description="Request must include a name field")
+    if not str(data["name"]).strip():
+        abort(400, description="Name field cannot be empty")
     with accounts_lock:
         account = {
             "id": next_id,
@@ -52,6 +54,8 @@ def update_account(account_id):
     data = request.get_json()
     if not data:
         abort(400, description="Request body is required")
+    if "name" in data and not str(data["name"]).strip():
+        abort(400, description="Name field cannot be empty")
     with accounts_lock:
         account = accounts.get(account_id)
         if not account:
