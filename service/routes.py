@@ -59,7 +59,6 @@ def update_account(account_id):
         for field in ["name", "email", "address", "phone_number", "date_joined"]:
             if field in data:
                 account[field] = data[field]
-        accounts[account_id] = account
     return jsonify(account), 200
 
 
